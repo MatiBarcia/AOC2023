@@ -42,6 +42,44 @@ def part1():
         return sum
     
 def part2():
-    
+    with open(fileName, "r") as f:
+        sum = 0
+        for id in range(1, numGames+1):
+            line = f.readline()
+            # print("Game ", end=str(id)+"\n")
 
-print(part1())
+            gameSplit = line[line.find(":")+1:]
+            setSplit = gameSplit.split(";")
+
+            minRed = 1
+            minGreen = 1
+            minBlue = 1
+
+            for set in setSplit:
+                colorSplit = set.split(",")
+                for color in colorSplit:
+                    if((color.find("red") != -1)):
+                        amountRed = int(re.search(r'\d+', color).group())
+                        if(amountRed > minRed):
+                            minRed = amountRed
+
+                    if((color.find("green") != -1)):
+                        amountGreen = int(re.search(r'\d+', color).group())
+                        if(amountGreen > minGreen):
+                            minGreen = amountGreen
+                    
+                    if((color.find("blue") != -1)):
+                        amountBlue = int(re.search(r'\d+', color).group())
+                        if(amountBlue > minBlue):
+                            minBlue = amountBlue
+            
+            # print("GAME ", end=str(id)+"\n")
+            # print("Red ", end=str(minRed)+"\n")
+            # print("Green ", end=str(minGreen)+"\n")
+            # print("Blue ", end=str(minBlue)+"\n\n")
+            sum += minRed * minGreen * minBlue
+        
+        return sum
+
+print("Parte 1: ", end=str(part1())+"\n")
+print("Parte 2: ", end=str(part2())+"\n\n")
